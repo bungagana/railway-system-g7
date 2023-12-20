@@ -4,7 +4,6 @@ body {
     margin: 0px;
     background-repeat: no-repeat;
     background-color: #f2f2f2;
-    background-image: url('C:/xampp1/htdocs/projectweb/rail.jpg');
     background-size: cover;
 }
 
@@ -76,7 +75,6 @@ nav ul ul {
     background-repeat: no-repeat;
     background-size: cover;
     background-image: url('../images/back.jpg');
-    /* Fix: Remove the extra colon here */
     padding: 0px;
     margin: 10px;
     height: 100%;
@@ -119,7 +117,7 @@ nav ul ul {
     width: 100%;
     font-family: 'Montserrat', sans-serif;
     text-align: center;
-    background-color: #4CAF50;
+    background-color: #0f2849;
 }
 
 .table-emp tr th {
