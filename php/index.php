@@ -83,6 +83,7 @@ if (!$conn->connect_error) {
         <?php if (isset($errorMessage)) : ?>
             <p style="color: red;"><?php echo $errorMessage; ?></p>
         <?php endif; ?>
+    <a href="home.php" class="back-button">Back to Home</a>
     </div>
 
     <script src="../js/login.js"></script>
