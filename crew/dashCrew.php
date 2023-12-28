@@ -96,7 +96,7 @@ $conn->close();
             <?php include 'sidebarCrew.php'; ?>
         </div>
         <div class="main_content">
-            <div class="header">Welcome! Have a nice day.</div>
+            <div class="header">&copy; 2023 Railway Crew Schedule System. All Rights Reserved.</div>
             <div class="info">
                 <h2>Dashboard Content</h2>
                 <?php
@@ -150,6 +150,10 @@ $conn->close();
                 }
             });
         });
+        
     </script>
+	 <footer>
+    <p>&copy; <?php echo date('Y'); ?> Railway Crew Schedule System. All Rights Reserved.</p>
+</footer>
 </body>
 </html>
