@@ -72,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Refresh the page to reflect updated details
-    header("Location: profile.php");
+    header("Location: profileCrew.php");
     exit();
 }
 
@@ -101,7 +101,7 @@ $conn->close();
             <div class="header">Profile</div>
 
             <div class="info">
-                <form method="post" action="profile.php">
+                <form method="post" action="profileCrew.php">
                     <label for="crewId">Crew Id:</label>
                     <input type="text" id="crewId" name="crewId" value="<?php echo $user['crewId']; ?>" required readonly>
 
