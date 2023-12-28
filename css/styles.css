@@ -140,3 +140,12 @@ canvas {
     max-width: 100%;
     border-radius: 8px;
 }
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+    position: absolute;
+    bottom: 100;
+    width: 100%;
+}
