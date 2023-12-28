@@ -1,18 +1,6 @@
 <?php
 session_start();
 
-function checkEmail($conn, $email) {
-    $email = mysqli_real_escape_string($conn, $email);
-
-    $sql = mysqli_query($conn, "SELECT * FROM users WHERE email='$email'");
-
-    if (mysqli_num_rows($sql) == 0) {
-        return true;
-    }
-
-    return false;
-}
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $crewId = $_POST["crewId"];
     $name = $_POST["fullName"];
@@ -47,8 +35,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if ($password !== $confirmpassword) {
-        echo "<script>alert('Passwords do not match. Please enter the same password in both fields.');</script>";
+        echo "Password and Confirm Password do not match.";
     } else {
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
         // Database connection
         include '../php/connection.php';
 
@@ -56,34 +46,47 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
+        
+        // Check if crewId already exists
+$stmt = $conn->prepare("SELECT crewId FROM users WHERE crewId = ?");
+$stmt->bind_param("s", $crewId);
+$stmt->execute();
+$stmt->store_result();
 
-        // Check if the email is already in use
-        if (checkEmail($conn, $email)) {
-            // Use prepared statement to prevent SQL injection
-            $stmt = $conn->prepare("INSERT INTO users (crewId, name, email, username, password, department, userRole) 
-                                    VALUES (?, ?, ?, ?, ?, ?, ?)");
-            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-            $stmt->bind_param("sssssss", $crewId, $name, $email, $username, $hashedPassword, $department, $userRole);
+if ($stmt->num_rows > 0) {
+    echo "Crew ID already exists. Please choose a different one.";
+    exit;
+}
+// Check if email already exists
+$stmt = $conn->prepare("SELECT email FROM users WHERE email = ?");
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$stmt->store_result();
 
-            if ($stmt->execute()) {
-                echo "Congrats! Your account has been created.";
-                header("Location: index.php?loginCrewId=$crewId&userRole=$userRole");
-                exit;
-            } else {
-                echo "Error: " . $stmt->error;
-            }
+if ($stmt->num_rows > 0) {
+    echo "Email already exists. Please use a different email.";
+    exit;
+}
 
-            $stmt->close();
+        // Use prepared statement to prevent SQL injection
+        $stmt = $conn->prepare("INSERT INTO users (crewId, name, email, username, password, department, userRole) 
+                                VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssssss", $crewId, $name, $email, $username, $hashedPassword, $department, $userRole);
+
+        if ($stmt->execute()) {
+            echo "Congrats! Your account has been created.";
+            header("Location: index.php?loginCrewId=$crewId&userRole=$userRole");
+            exit;
         } else {
-            echo "<script> alert('Email is already in use. Try again with a different email.');</script>";
+            echo "Error: " . $stmt->error;
         }
 
+
+        $stmt->close();
         $conn->close();
     }
 }
 ?>
-
-
 
 <!DOCTYPE html>
 <html>
@@ -101,18 +104,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="text" id="crewId" name="crewId" placeholder="Crew ID" required>
             <input type="text" id="name" name="fullName" placeholder="Full Name" required>
             <input type="text" id="email" name="email" placeholder="Email" required>
-            <?php
-            if (isset($duplicateEmailMessage)) {
-            echo "<div id='dup_email_msg' style='color: red;'>$duplicateEmailMessage</div>";
-            }
-            ?>
-
-            <br>
             <input type="text" id="username" name="username" placeholder="Username" required>
-            <input type="password" id="password" name="password" placeholder="Password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#?]).{8,}$" title="Please meet the password requirements.At least 8 characters
-            A mixture of both uppercase and lowercase letters
-            A mixture of letters and numbers
-            Inclusion of at least one special character, e.g., ! @ # ? ]" required><br>
+            <input type="password" id="password" name="password" placeholder="Password" 
+            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#?]).{8,}$"
+title="Password should be at least 8 characters in length and should include at least one upper case letter, one number, and one special character." required>
+
             <input type="password" id="confirmpassword" name="confirmpassword" placeholder="Confirm Password" required>
             <select name="department" required>
                 <option value="" disabled selected>Select Department</option>
@@ -136,8 +132,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <p>Already Have Account? <a href="index.php">Login</a></p>
         <p id="registrationMessage"></p>
+        <a href="home.php" class="back-button">Back to Home</a>
     </div>
-    
+
     <script src="../js/regis.js"></script>
 </body>
 
