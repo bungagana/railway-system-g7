@@ -16,6 +16,9 @@ if (!$conn->connect_error) {
         $stmt->execute();
         $stmt->bind_result($dbCrewId, $dbPassword, $userRole);
 
+        // Initialize a variable to track whether credentials are valid
+        $credentialsValid = false;
+
         // After successful password verification
         if ($stmt->fetch()) {
             if (password_verify($loginPassword, $dbPassword)) {
@@ -36,21 +39,22 @@ if (!$conn->connect_error) {
                     exit;
                 }
             } else {
-                echo "Invalid crew ID, password, or user role.";
+                $errorMessage = "Invalid password.";
             }
         } else {
-            echo "Invalid crew ID, password, or user role.";
+            $errorMessage = "Invalid crew ID or user role.";
         }
 
         // Close the statement
         $stmt->close();
-    } 
+    }
 
     // Close the connection
     $conn->close();
 } else {
-    echo "Connection error: " . $conn->connect_error;
+    $errorMessage = "Connection error: " . $conn->connect_error;
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -76,9 +80,12 @@ if (!$conn->connect_error) {
             <button type="submit">Login</button>
         </form>
         <p>Don't have an account? <a href="regis.php">Register</a></p>
-        <p id="loginMessage"></p>
+        <?php if (isset($errorMessage)) : ?>
+            <p style="color: red;"><?php echo $errorMessage; ?></p>
+        <?php endif; ?>
     </div>
 
     <script src="../js/login.js"></script>
 </body>
+
 </html>
