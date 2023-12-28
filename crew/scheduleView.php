@@ -87,7 +87,7 @@ if ($result->num_rows > 0) {
             </div>
         </div>
     </div>
-
+   
     <script>
         function searchSchedule() {
         // Get the input, table, and rows
@@ -122,6 +122,7 @@ if ($result->num_rows > 0) {
         }
     }
     </script>
+    
 </body>
 
 </html>
