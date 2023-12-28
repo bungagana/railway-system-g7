@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 20, 2023 at 06:15 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Generation Time: Dec 28, 2023 at 05:31 PM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -38,10 +38,10 @@ CREATE TABLE `departments` (
 --
 
 INSERT INTO `departments` (`departmentId`, `departmentName`, `departmentDesc`) VALUES
-(11, 'Crew Railaway', 'Crew Railaway'),
 (12, 'CS', 'CS'),
 (13, 'machinist', 'machinist'),
-(14, 'stewardess', 'stewardess');
+(14, 'stewardess', 'stewardess'),
+(15, 'OPERATION ', 'The operation of the railway is through a system of control');
 
 -- --------------------------------------------------------
 
@@ -91,9 +91,13 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`crewId`, `name`, `email`, `username`, `password`, `department`, `userRole`, `mfa_secret`) VALUES
 ('adminBunga', 'BungaAdmin', 'admin@gmail.com', 'root', '$2y$10$ROyDzwHXo6g2Ld2c/.4M/./jS1JwCGjCzqqin0c/BYH96hbQapv9G', 'Department1', 'Admin', NULL),
-('Bunga01', 'Bunga Laelatu M(Benar)', 'bungamagelang57@gmail.com', 'bungaa', '$2y$10$LjSPDzSmyleRcEttUiifEeC9h2aLLdzzaevtmE2aWiDNipkf1CMGm', 'Department3', 'Admin', NULL),
-('ji0', 'aa', '21102010@ittelkom-pwt.ac.id', 'a', '$2y$10$lgF.eiX0Sb2g9a11gSs6reD5mKf/ZdTjDvPBRIAl90wkmhKMnZK16', 'aa', 'Staff', NULL),
-('staffBunga', 'BungaStaff', 'staff@gmail.com', 'staff', '$2y$10$fcUtgrE2VgI2EQ7xUrn50u9cHXLlMSlWWslsQQKw42X0YMxPj.Q62', 'stewardess', 'Staff', NULL);
+('ai210002', 'vinisha', 'vinisha@gmail.com', 'root', '$2y$10$2LhRLfQQjbOBPhOKACQYBe8TF//9TF7P2BSovdQPplJjZrABnJwKG', 'Department3', 'Admin', NULL),
+('ai210003', 'hossini', 'hossini@gmail.com', 'root', '$2y$10$7zneqb1VGDtfag/zAGiVs.pkhECRCBe7yduMd8RABbPLcCYxY5KBm', 'Department1', 'Staff', NULL),
+('ai210004', 'tulasi', 'tulasi@gmail.com', 'root', '$2y$10$dfV8.S57rlwIuET3I93yfe75.TFUMhZf4g5Ke7bFGQk6b6b.bRtOS', 'Department2', 'Admin', NULL),
+('ai210005', 'qw', 'qw@gmail.com', 'root', '$2y$10$DxXPE4XSgp7ykfArv84.F.aPfQVJLimJoIq4bqTWRePl2X4XVDeLG', 'Department1', 'Admin', NULL),
+('di210001', 'YAMUNAH A/P K.RAGUBATHI', 'muna@gmail.com', 'root', '$2y$10$Cgs2S7kK/RHNwd3srSbVWeMYU.US9CQhNux4JpvDtTEprgC7jys1W', 'CS', 'Admin', NULL),
+('di210002', 'chee', 'chee@gmail.com', 'root', '$2y$10$UjVEZ5EBffTS43qu5hmj7e6wDI.LA4m8ve7noByBmwcyTOP8Il7N.', 'Department1', 'Staff', NULL),
+('di210005', 'zx', 'zx@gmail.com', 'root', '$2y$10$soDkbBqRcgZOYoH8u4.Yk.Ps79dh7Vr4VOkqGkp1eL5H5mIimTNEW', 'Department2', 'Admin', NULL);
 
 --
 -- Indexes for dumped tables
@@ -125,13 +129,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `departments`
 --
 ALTER TABLE `departments`
-  MODIFY `departmentId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `departmentId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `schedules`
 --
 ALTER TABLE `schedules`
-  MODIFY `scheduleId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `scheduleId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
