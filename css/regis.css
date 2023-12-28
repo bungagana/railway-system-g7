@@ -2,6 +2,9 @@ body {
     font-family: 'Galdeano-Regular', sans-serif;
     background: rgb(0, 0, 0);
     padding: 80px;
+    background-image: url('../images/ktm2.jfif'); /* Replace 'path/to/your/image.jpg' with your local image path */
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .g-recaptcha {
