@@ -1,7 +1,7 @@
 <?php
 $servername = "20102110.kelasmm1.cloud";
 $username = "railweb";
-$password = "webBunga123";
+$password = "webBunga123.";
 $dbname = "kelasmmc_webRail";
 
 // Create connection
