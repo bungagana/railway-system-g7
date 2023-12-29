@@ -1,6 +1,6 @@
 <?php
 $servername = "";
-$username = "root";
+$username = "";
 $password = "";
 $dbname = "kelasmmc_webProject";
 
