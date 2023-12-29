@@ -6,7 +6,7 @@ include '../php/connection.php';
 
 // Check if the user is logged in
 if (!isset($_SESSION['crewId'])) {
-    header("Location: index.php");
+    header("Location: ../php/index.php");
     exit();
 }
 
