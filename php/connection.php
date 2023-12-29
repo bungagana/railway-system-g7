@@ -1,5 +1,5 @@
 <?php
-$servername = "localhost";
+$servername = "https://20102110.kelasmm1.cloud/";
 $username = "root";
 $password = "";
 $dbname = "kelasmmc_webProject";
