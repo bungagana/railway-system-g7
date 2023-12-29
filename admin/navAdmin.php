@@ -81,10 +81,53 @@ $conn->close();
 
 <head>
     <meta charset="UTF-8">
-    <title>Side Navigation Bar</title>
+    <title>Infographic Dashboard</title>
     <link rel="stylesheet" href="../css/styles.css">
+    <style>
+    /* Add some styles to format the cards */
+    .card {
+        border: 1px solid #4b4276; /* Dark purple border */
+        padding: 20px;
+        margin: 10px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        transition: background-color 0.3s ease; /* Add a smooth transition effect */
+    }
+
+    .card:hover {
+        background-color: #4b4276; /* Dark purple background on hover */
+        color: #fff; /* White text on hover */
+    }
+
+    /* Style for the header */
+    .header {
+        font-size: 24px;
+        margin-bottom: 20px;
+        color: #4b4276; /* Dark purple header text */
+    }
+
+    /* Define colors for each card */
+  
+    .card.departments {
+        background-color: #4b4276; /* Dark purple background for departments */
+        color: #fff; /* White text for departments */
+    }
+
+    .card.crew {
+        background-color: #fff; /* White background for crews */
+        color: #4b4276; /* Dark purple text for crews */
+    }
+
+    .card.schedules {
+        background-color: #000; /* Black background for schedules */
+        color: #fff; /* White text for schedules */
+    }
+</style>
+
     <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
 </head>
+
 <body>
 
     <div class="wrapper">
@@ -94,7 +137,7 @@ $conn->close();
         <div class="main_content">
             <div class="header">Welcome! Have a nice day.</div>
             <div class="info">
-                <h2>Dashboard Content</h2>
+
                 <?php
                 include '../php/connection.php';
 
@@ -102,50 +145,16 @@ $conn->close();
                 $departmentCount = $conn->query("SELECT COUNT(*) as count FROM departments")->fetch_assoc()['count'];
                 $scheduleCount = $conn->query("SELECT COUNT(*) as count FROM schedules")->fetch_assoc()['count'];
 
-                echo "<p>Total Crews: $crewCount</p>";
-                echo "<p>Total Departments: $departmentCount</p>";
-                echo "<p>Total Schedules: $scheduleCount</p>";
+                echo "<div class='card departments'><p>Total Departments</p><h3>$departmentCount</h3></div>";
+                echo "<div class='card crew'><p>Total Crews</p><h3>$crewCount</h3></div>";
+                echo "<div class='card schedules'><p>Total Schedules</p><h3>$scheduleCount</h3></div>";
 
                 $conn->close();
                 ?>
-                <canvas id="myChart"></canvas>
             </div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            var ctx = document.getElementById('myChart').getContext('2d');
-            var myChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['Crews', 'Departments', 'Schedules'],
-                    datasets: [{
-                        label: 'Counts',
-                        data: [<?php echo $crewCount; ?>, <?php echo $departmentCount; ?>, <?php echo $scheduleCount; ?>],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(255, 206, 86, 0.5)',
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
-        });
-    </script>
 </body>
+
 </html>

@@ -42,7 +42,7 @@ if ($result->num_rows > 0) {
             <div class="info">
                 <button onclick="location.href='../admin/createschedule.php'">Create Schedule</button>
                 <div class="search-container">
-                    <input type="text" id="searchInput" placeholder="Search...">
+                    <input type="text" id="searchInput" placeholder="Search Name, CrewId">
                     <button onclick="searchSchedule()">Search</button>
                 </div>
                 <table id="scheduleTable">
@@ -52,7 +52,7 @@ if ($result->num_rows > 0) {
                             <th>Full Name</th>
                             <th>Crew ID</th>
                             <th>Job Roles</th>
-                            <th>Duty Time</th>
+                            <th>Duty Time (*Hour)</th>
                             <th>Start Time</th>
                             <th>End Time</th>
                             <th>Edit</th>
@@ -95,17 +95,19 @@ if ($result->num_rows > 0) {
     </div>
 
     <script>
-         // ------- Edit Function ----------
-         function editSchedule(crewID) {
+    // ------- Edit Function ----------
+    function editSchedule(crewID) {
         window.location.href = `editSchedule.php?crewID=${crewID}`;
+    }
+
+    function deleteSchedule(crewID) {
+        const confirmDelete = confirm(`Are you sure you want to delete this schedule with Crew ID ${crewID}?`);
+        if (confirmDelete) {
+            window.location.href = `delete.php?crewID=${crewID}`;
         }
-        function deleteSchedule(crewID) {
-            const confirmDelete = confirm(`Are you sure you want to delete this schedule with Crew ID ${crewID}?`);
-            if (confirmDelete) {
-                window.location.href = `delete.php?crewID=${crewID}`;
-            }
-        }
-        function searchSchedule() {
+    }
+
+    function searchSchedule() {
         // Get the input, table, and rows
         var input, filter, table, tbody, tr, td, i, j, txtValue;
         input = document.getElementById("searchInput");
@@ -114,30 +116,42 @@ if ($result->num_rows > 0) {
         tbody = document.getElementById("scheduleBody");
         tr = tbody.getElementsByTagName("tr");
 
+        // Flag to check if any data is found
+        var foundData = false;
+
         // Loop through all table rows
         for (i = 0; i < tr.length; i++) {
             var found = false;
-            // Loop through all columns for each row
-            for (j = 0; j < tr[i].cells.length; j++) {
+            // Loop through specific columns (Full Name, Crew ID, Job Roles)
+            for (j = 1; j <= 3; j++) {
                 td = tr[i].cells[j];
                 if (td) {
                     txtValue = td.textContent || td.innerText;
                     if (txtValue.toUpperCase().indexOf(filter) > -1) {
                         found = true;
+                        foundData = true;
                         break; // Break the inner loop if a match is found in any column
                     }
                 }
             }
 
-            // Display or hide the row based on whether a match was found
+            // Display or hide the row based on whether a match is found
             if (found) {
                 tr[i].style.display = "";
             } else {
                 tr[i].style.display = "none";
             }
         }
+
+        // Display "Data Not Found" message if no matching data is found
+        if (!foundData) {
+            var noDataMessage = document.createElement("tr");
+            noDataMessage.innerHTML = "<td colspan='9'>Data Not Found</td>";
+            tbody.appendChild(noDataMessage);
+        }
     }
-    </script>
+</script>
+
 </body>
 
 </html>

@@ -89,7 +89,7 @@ if ($result->num_rows > 0) {
     </div>
    
     <script>
-        function searchSchedule() {
+       function searchSchedule() {
         // Get the input, table, and rows
         var input, filter, table, tbody, tr, td, i, j, txtValue;
         input = document.getElementById("searchInput");
@@ -98,27 +98,38 @@ if ($result->num_rows > 0) {
         tbody = document.getElementById("scheduleBody");
         tr = tbody.getElementsByTagName("tr");
 
+        // Flag to check if any data is found
+        var foundData = false;
+
         // Loop through all table rows
         for (i = 0; i < tr.length; i++) {
             var found = false;
-            // Loop through all columns for each row
-            for (j = 0; j < tr[i].cells.length; j++) {
+            // Loop through specific columns (Full Name, Crew ID, Job Roles)
+            for (j = 1; j <= 3; j++) {
                 td = tr[i].cells[j];
                 if (td) {
                     txtValue = td.textContent || td.innerText;
                     if (txtValue.toUpperCase().indexOf(filter) > -1) {
                         found = true;
+                        foundData = true;
                         break; // Break the inner loop if a match is found in any column
                     }
                 }
             }
 
-            // Display or hide the row based on whether a match was found
+            // Display or hide the row based on whether a match is found
             if (found) {
                 tr[i].style.display = "";
             } else {
                 tr[i].style.display = "none";
             }
+        }
+
+        // Display "Data Not Found" message if no matching data is found
+        if (!foundData) {
+            var noDataMessage = document.createElement("tr");
+            noDataMessage.innerHTML = "<td colspan='9'>Data Not Found</td>";
+            tbody.appendChild(noDataMessage);
         }
     }
     </script>

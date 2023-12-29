@@ -78,7 +78,7 @@ if ($result->num_rows > 0) {
                     <label for="crewID">Crew ID:</label>
                     <input type="text" id="crewID" name="crewID" required>
 
-                    <label for="jobRoles">Job Roles:</label>
+                    <label for="jobRoles">Department:</label>
                     <select id="jobRoles" name="jobRoles" required>
                         <?php
                         foreach ($departmentOptions as $option) {

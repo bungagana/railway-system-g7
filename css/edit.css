@@ -22,6 +22,13 @@ body {
     box-sizing: border-box;
 }
 
+.info select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+}
+
 form button {
     background-color: #4b4276;
     color: #fff;

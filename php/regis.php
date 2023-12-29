@@ -87,9 +87,9 @@ if ($stmt->num_rows > 0) {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Registrasi</title>
     <link rel="stylesheet" type="text/css" href="../css/regis.css">
@@ -101,25 +101,57 @@ if ($stmt->num_rows > 0) {
         <h2>R E G I S T E R</h2>
 
         <form method="post" action="regis.php" id="registrationForm">
-            <input type="text" id="crewId" name="crewId" placeholder="Crew ID" required>
-            <input type="text" id="name" name="fullName" placeholder="Full Name" required>
-            <input type="text" id="email" name="email" placeholder="Email" required>
-            <input type="text" id="username" name="username" placeholder="Username" required>
-            <input type="password" id="password" name="password" placeholder="Password" 
-            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#?]).{8,}$"
-title="Password should be at least 8 characters in length and should include at least one upper case letter, one number, and one special character." required>
+            <label for="crewId">Crew ID:</label>
+            <input type="text" id="crewId" name="crewId" placeholder="Enter Crew ID" required>
 
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="fullName" placeholder="Enter Full Name" required>
+
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email" placeholder="Enter Email" required>
+
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" placeholder="Enter Username" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Password Min 8 character" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#?]).{8,}$" title="Password should be at least 8 characters in length and should include at least one upper case letter, one number, and one special character." required>
+
+            <label for="confirmpassword">Confirm Password:</label>
             <input type="password" id="confirmpassword" name="confirmpassword" placeholder="Confirm Password" required>
+
+            <label for="department">Department:</label>
             <select name="department" required>
                 <option value="" disabled selected>Select Department</option>
                 <?php
-                    $departments = ["Department1", "Department2", "Department3"];
+                    // Database connection
+                    include '../php/connection.php';
 
-                    foreach ($departments as $department) {
-                        echo "<option value='$department'>$department</option>";
+                    // Check connection
+                    if ($conn->connect_error) {
+                        die("Connection failed: " . $conn->connect_error);
                     }
+
+                    // Query to get departments
+                    $departmentQuery = "SELECT departmentName FROM departments";
+                    $departmentResult = $conn->query($departmentQuery);
+
+                    // Check if there are departments
+                    if ($departmentResult->num_rows > 0) {
+                        // Output data of each row
+                        while ($row = $departmentResult->fetch_assoc()) {
+                            $departmentName = $row["departmentName"];
+                            echo "<option value='$departmentName'>$departmentName</option>";
+                        }
+                    } else {
+                        echo "<option value='' disabled>No departments available</option>";
+                    }
+
+                    // Close the database connection
+                    $conn->close();
                 ?>
             </select>
+
+            <label for="userRole">User Role:</label>
             <select name="userRole" required>
                 <option value="" disabled selected>Select User Role</option>
                 <option value="Admin">Admin</option>

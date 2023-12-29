@@ -69,8 +69,13 @@ if (!$conn->connect_error) {
     <div class="container">
         <h2>L O G I N</h2>
         <form method="post" action="index.php" id="loginForm">
+            <label for="loginCrewId">Crew ID:</label>
             <input type="text" id="loginCrewId" name="loginCrewId" placeholder="Crew ID" required value="<?php echo isset($_GET['loginCrewId']) ? $_GET['loginCrewId'] : ''; ?>">
+
+            <label for="loginPassword">Password:</label>
             <input type="password" id="loginPassword" name="loginPassword" placeholder="Password" required>
+
+            <label for="userRole">User Role:</label>
             <select name="userRole" required>
                 <option value="" disabled selected>Select User Role</option>
                 <option value="Admin">Admin</option>

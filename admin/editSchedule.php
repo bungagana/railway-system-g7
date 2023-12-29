@@ -106,7 +106,7 @@ if ($result->num_rows > 0) {
 
                     <label for="crewID">Crew ID:</label>
                     <input type="text" name="crewID" id="crewID" value="<?php echo $schedule['crewID']; ?>" required disabled>
-                    <label for="jobRoles">Job Roles:</label>
+                    <label for="jobRoles">Department:</label>
                     <select id="editJobRoles" name="jobRoles" required>
                         <?php
                         foreach ($departmentOptions as $option) {
@@ -116,7 +116,7 @@ if ($result->num_rows > 0) {
                         ?>
                     </select>
 
-                    <label for="dutyTime">Duty Time:</label>
+                    <label for="dutyTime">Duty Time (*Hour):</label>
                     <input type="text" name="dutyTime" id="dutyTime" value="<?php echo $schedule['dutyTime']; ?>" required>
 
                     <label for="startTime">Start Time:</label>

@@ -3,7 +3,6 @@ session_start();
 
 include '../php/connection.php';
 
-//========== GET PROFILE INFORMATION ============
 // Check if the user is logged in
 if (!isset($_SESSION['crewId'])) {
     header("Location: index.php");
@@ -16,7 +15,6 @@ $stmt = $conn->prepare("SELECT * FROM users WHERE crewId = ?");
 $stmt->bind_param("s", $crewId);
 $stmt->execute();
 $result = $stmt->get_result();
-
 
 // Check if the user exists
 if ($result->num_rows > 0) {
@@ -40,6 +38,7 @@ if ($result->num_rows > 0) {
         $departmentOptions[] = $row["departmentName"];
     }
 }
+
 // Handle form submission for updating user details
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST["name"];
@@ -55,19 +54,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Check if change password form is submitted
     if (isset($_POST['changePassword'])) {
+        $oldPassword = $_POST["oldPassword"];
         $newPassword = $_POST["newPassword"];
         $confirmPassword = $_POST["confirmPassword"];
 
-        // Verify that new password and confirm password match
-        if ($newPassword === $confirmPassword) {
-            // Update password
-            $newHashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
-            $updatePasswordStmt = $conn->prepare("UPDATE users SET password = ? WHERE crewId = ?");
-            $updatePasswordStmt->bind_param("ss", $newHashedPassword, $crewId);
-            $updatePasswordStmt->execute();
-            $updatePasswordStmt->close();
+        // Verify old password
+        $hashedPassword = $user['password'];
+        if (password_verify($oldPassword, $hashedPassword)) {
+            // Verify that new password and confirm password match
+            if ($newPassword === $confirmPassword) {
+                // Update password
+                $newHashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+                $updatePasswordStmt = $conn->prepare("UPDATE users SET password = ? WHERE crewId = ?");
+                $updatePasswordStmt->bind_param("ss", $newHashedPassword, $crewId);
+                $updatePasswordStmt->execute();
+                $updatePasswordStmt->close();
+            } else {
+                echo "Mismatched new passwords.";
+            }
         } else {
-            echo "Mismatched new passwords.";
+            echo "Incorrect old password.";
         }
     }
 
@@ -78,6 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 $conn->close();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -137,13 +144,16 @@ $conn->close();
                         }
                         ?>
                     </select>
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" placeholder="Password">
+                    <label for="oldPassword">Old Password:</label>
+                    <input type="password" id="oldPassword" name="oldPassword" placeholder="Old Password" required>
 
-                    <label for="confirmpassword">Confirm Password</label>
-                    <input type="password" id="confirmpassword" name="confirmpassword" placeholder="Confirm Password">
+                    <label for="newPassword">New Password:</label>
+                    <input type="password" id="newPassword" name="newPassword" placeholder="New Password" required>
 
-                    <button type="submit">Save Changes</button>
+                    <label for="confirmPassword">Confirm Password:</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
+
+                    <button type="submit" name="changePassword">Change Password</button>
                 </form>
 
 

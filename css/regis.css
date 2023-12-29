@@ -2,7 +2,7 @@ body {
     font-family: 'Galdeano-Regular', sans-serif;
     background: rgb(0, 0, 0);
     padding: 80px;
-    background-image: url('../images/ktm2.jfif'); /* Replace 'path/to/your/image.jpg' with your local image path */
+    background-image: url('../images/ktm2.jfif');
     background-size: cover;
     background-repeat: no-repeat;
 }
@@ -12,7 +12,7 @@ body {
 }
 
 .container {
-    width: 800px;
+    width: 500px;
     margin: 0 auto;
     padding: 20px;
     background-color: #fff;
@@ -38,6 +38,15 @@ h2::after {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
+}
+
+label {
+    size: 14px;
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 2px;
+    font-weight: 500;
+    text-align: left;
 }
 
 input,
