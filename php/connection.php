@@ -1,8 +1,8 @@
 <?php
-$servername = "";
-$username = "";
-$password = "";
-$dbname = "kelasmmc_webProject";
+$servername = "kelasmmc_webRail";
+$username = "railweb";
+$password = "webBunga123";
+$dbname = "kelasmmc_webRail";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
