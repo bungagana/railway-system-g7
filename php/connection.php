@@ -1,5 +1,5 @@
 <?php
-$servername = "kelasmmc_webRail";
+$servername = "https://20102110.kelasmm1.cloud/railway-system-g7/";
 $username = "railweb";
 $password = "webBunga123";
 $dbname = "kelasmmc_webRail";
