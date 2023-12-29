@@ -1,5 +1,5 @@
 <?php
-include 'php/connection.php';
+include '../php/connection.php';
 // Start the session
 session_start();
 
@@ -28,10 +28,10 @@ if (!$conn->connect_error) {
 
                 // Redirect based on user role
                 if ($userRole === "Admin") {
-                    header("Location: admin/navAdmin.php");
+                    header("Location: ../admin/navAdmin.php");
                     exit;
                 } elseif ($userRole === "Staff") {
-                    header("Location: crew/dashCrew.php");
+                    header("Location: ../crew/dashCrew.php");
                     exit;
                 } else {
                     // Handle other roles or redirect to a default page
@@ -62,7 +62,7 @@ if (!$conn->connect_error) {
 
 <head>
     <title>Login</title>
-    <link rel="stylesheet" type="text/css" href="css/regis.css">
+    <link rel="stylesheet" type="text/css" href="../css/regis.css">
 </head>
 
 <body>
@@ -84,14 +84,14 @@ if (!$conn->connect_error) {
 
             <button type="submit">Login</button>
         </form>
-        <p>Don't have an account? <a href="php/regis.php">Register</a></p>
+        <p>Don't have an account? <a href="regis.php">Register</a></p>
         <?php if (isset($errorMessage)) : ?>
             <p style="color: red;"><?php echo $errorMessage; ?></p>
         <?php endif; ?>
     <a href="home.php" class="back-button">Back to Home</a>
     </div>
 
-    <script src="js/login.js"></script>
+    <script src="../js/login.js"></script>
 </body>
 
 </html>
