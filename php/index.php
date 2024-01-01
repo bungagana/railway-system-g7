@@ -63,13 +63,72 @@ if (!$conn->connect_error) {
 <head>
     <title>Login</title>
     <link rel="stylesheet" type="text/css" href="../css/regis.css">
+
+    <style>
+    body {
+    font-family: 'Galdeano-Regular', sans-serif;
+    background: rgb(0, 0, 0);
+    margin: 0px;
+    padding: 0px;
+    background-image: url('../images/ktm2.jfif'); /* Replace 'path/to/your/image.jpg' with your local image path */
+    background-size: cover;
+    background-repeat: no-repeat;
+    }
+
+    header {
+    background-color: #cdcdb1;
+    color: black;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    text-align: center;
+    }
+
+    header h1 {
+        margin: 0;
+    }
+
+    .container {
+    width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    position: absolute; 
+    top: 40%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    }
+
+    footer {
+    text-align: center;
+    padding: 0px;
+    background-color: #333;
+    color: white;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    line-height: 1.2;
+    }
+
+    </style>
 </head>
 
 <body>
+
+<header>
+<img src="../images/logo.png" alt="logo" width="150" height="auto">
+    <h1>Welcome to Railway Crews Schedule System</h1>
+</header>
+
     <div class="container">
         <h2>L O G I N</h2>
-        <form method="post" action="index.php" id="loginForm">
-            <label for="loginCrewId">Crew ID:</label>
+        <label for="loginCrewId">Crew ID:</label>
             <input type="text" id="loginCrewId" name="loginCrewId" placeholder="Crew ID" required value="<?php echo isset($_GET['loginCrewId']) ? $_GET['loginCrewId'] : ''; ?>">
 
             <label for="loginPassword">Password:</label>
@@ -88,10 +147,13 @@ if (!$conn->connect_error) {
         <?php if (isset($errorMessage)) : ?>
             <p style="color: red;"><?php echo $errorMessage; ?></p>
         <?php endif; ?>
-    <a href="home.php" class="back-button">Back to Home</a>
+        <a href="home.php" class="back-button">Back to Home</a>
     </div>
 
     <script src="../js/login.js"></script>
+    <footer>
+    <p style="color: white;">&copy; <?php echo date('Y'); ?> BIC 21203 Section 9 Group 7. All Rights Reserved.</p>
+</footer>
 </body>
 
 </html>
